@@ -1,40 +1,23 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Project Note: The Alchemy of Pixels and Play
 
-## Getting Started
+I built this 3D portfolio not just to showcase work, but to weave a digital spell—one where code dances with art, and the browser becomes a portal. Here’s the secret sauce:
 
-First, run the development server:
+⚡ Next.js: The Invisible Architect
+The skeleton of this project, Next.js, isn’t just a framework—it’s a time traveler. It pre-renders pages like a fortune teller, predicting what users need before they even click. SSR? More like Sorcerously Smooth Rendering.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🎪 GSAP: The Puppet Master
+GSAP doesn’t animate elements—it orchestrates drama. Scroll-triggered reveals? That’s the chorus. Hover effects? Solo performances. Every transition is a carefully timed breath, turning static pixels into a living, breathing narrative.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+👾 React-Three-Fibre: The Portal to 3D
+Those Geometries aren't just a 3d figure—it’s a possession. React-Three-Fibre let me bind it to the DOM like a digital exorcism. Shadows, reflections, and rotations aren’t math here—they’re incantations.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+📜 Prismic: The Shape-Shifting Scroll
+Prismic isn’t a CMS—it’s a mirror dimension. Clients (or future me) can tweak text, swap images, or rearrange sections without ever touching code. It’s content witchcraft, plain and simple.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Why This Stack?
+Next.js + React-Three-Fibre: Because 3D shouldn’t mean sacrificing SEO or speed.
 
-## Learn More
+GSAP: Because users deserve butter-smooth storytelling, not jarring jumps.
 
-To learn more about Next.js, take a look at the following resources:
+Prismic: Because even wizards need an easy way to update their spellbooks.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-=======
-# my-portfolio
->>>>>>> 5d12d274fcf4127c68deceddbf8917a1b0033ab8
