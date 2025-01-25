@@ -1,14 +1,16 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Urbanist } from "next/font/google"; // Import the Urbanist font
+import "./globals.css"; // Import global styles
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import clsx from "clsx";
+import { PrismicPreview } from "@prismicio/next";
+import { createClient, repositoryName } from "@/prismicio";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Configure the Urbanist font
+const urbanist = Urbanist({
+  variable: "--font-urbanist", // Define a CSS variable for the font
+  subsets: ["latin"], // Specify the subsets you want to use
+  weight: ["400", "500", "600", "700"], // Specify the weights you need
 });
 
 export const metadata = {
@@ -18,12 +20,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className="bg-slate-900">
+      
+      <body className={clsx(`${urbanist.variable} antialiased`, 'relative min-h-screen overflow-x-hidden')}>
+        <Header/>
         {children}
+        <Footer/>
+        <div className="absolute inset-0 -z-50 h-full w-full background-gradient"></div>
+        <div className="absolute pointer-events-none inset-0 -z-40 h-full bg-[url('/noisetexture.jpg')] opacity-20 mix-blend-soft-light">
+
+        </div>
       </body>
+      <PrismicPreview repositoryName={repositoryName}/>
     </html>
   );
 }
