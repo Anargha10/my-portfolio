@@ -21,15 +21,13 @@ const TechList = ({ slice }) => {
         gsap.fromTo(
           row,
           {
-            // Use responsive x values based on media queries or percentage
-            // This ensures they start further out for larger screens, but closer for smaller
             x: (i) => {
                 const screenWidth = window.innerWidth;
-                if (screenWidth < 640) { // Small screens (e.g., phones)
-                    return (index % 2 === 0 ? "100%" : "-100%"); // Start completely off-screen
-                } else if (screenWidth < 1024) { // Medium screens (e.g., tablets)
-                    return (index % 2 === 0 ? "80%" : "-80%");
-                } else { // Large screens (desktops)
+                if (screenWidth < 640) {
+                    return (index % 2 === 0 ? "100vw" : "-100vw");
+                } else if (screenWidth < 1024) {
+                    return (index % 2 === 0 ? "80vw" : "-80vw");
+                } else {
                     return (index % 2 === 0 ? "600px" : "-600px");
                 }
             },
@@ -41,11 +39,11 @@ const TechList = ({ slice }) => {
             duration: 1.5,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: row, // Trigger on the row itself
-              start: "top 85%", // Trigger when row enters the viewport
-              end: "bottom 15%", // End animation when row exits
-              scrub: 1, // Smooth scroll effect
-              // markers: true, // Enable markers for debugging - useful for fine-tuning
+              trigger: row,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+              // markers: true, // Re-enable for debugging!
             },
           }
         );
@@ -55,26 +53,27 @@ const TechList = ({ slice }) => {
           items,
           {
             opacity: 0,
-            x: (i) => (i % 2 === 0 ? -20 : 20), // Smaller initial x for individual items
+            x: (i) => (i % 2 === 0 ? -10 : 10),
           },
           {
             opacity: 1,
             x: 0,
             duration: 1,
             ease: "power3.out",
-            stagger: 0.05, // Slightly reduced stagger
+            stagger: 0.03,
             scrollTrigger: {
               trigger: row,
-              start: "top 85%",
-              end: "bottom 15%",
+              start: "top bottom",
+              end: "bottom top",
               scrub: 1,
+              // markers: true, // Re-enable for debugging!
             },
           }
         );
       });
     }, component);
 
-    return () => ctx.revert(); // Cleanup animations
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -89,12 +88,15 @@ const TechList = ({ slice }) => {
         </Heading>
       </Bounded>
 
+      {/* !!! MOVE THE TECH-ROW LOOP OUTSIDE Bounded !!! */}
       {slice.primary.repeatable.map((item, index) => (
         <div
           key={index}
-          className="tech-row mb-8 flex flex-nowrap items-center justify-center gap-2 md:gap-4 text-slate-700 whitespace-nowrap overflow-hidden" // Added whitespace-nowrap, adjusted gap
+          // The overflow-hidden on tech-row is crucial here
+          className="tech-row mb-8 flex flex-nowrap items-center justify-center gap-2 md:gap-4 text-slate-700 whitespace-nowrap overflow-hidden"
+          // Keep minWidth for the row itself
+          style={{ minWidth: "100vw" }}
         >
-          {/* Dynamically adjust number of items based on screen size */}
           {Array.from({ length: window.innerWidth < 640 ? 3 : (window.innerWidth < 1024 ? 7 : 15) }, (_, i) => {
             const numItems = window.innerWidth < 640 ? 3 : (window.innerWidth < 1024 ? 7 : 15);
             const middleIndex = Math.floor(numItems / 2);
@@ -102,14 +104,14 @@ const TechList = ({ slice }) => {
             return (
               <React.Fragment key={i}>
                 <span
-                  className="tech-item text-lg md:text-3xl lg:text-6xl font-extrabold uppercase tracking-tighter" // More granular responsive font sizes
+                  className="tech-item text-xl md:text-3xl lg:text-6xl font-extrabold uppercase tracking-tighter"
                   style={{
-                    color: i === middleIndex ? item.tech_color : "inherit", // Apply color to the middle item dynamically
+                    color: i === middleIndex ? item.tech_color : "inherit",
                   }}
                 >
                   {item.tech_name}
                 </span>
-                <span className="text-xl md:text-2xl lg:text-3xl"> {/* Responsive icon size */}
+                <span className="text-lg md:text-xl lg:text-3xl">
                   <MdCircle />
                 </span>
               </React.Fragment>
