@@ -14,66 +14,91 @@ const TechList = ({ slice }) => {
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      gsap.utils.toArray(".tech-row").forEach((row, index) => {
-        const items = row.querySelectorAll(".tech-item");
 
-        // --- Animation for the entire row (left/right movement) ---
-        gsap.fromTo(
-          row,
-          {
-            x: (i) => {
-                const screenWidth = window.innerWidth;
-                if (screenWidth < 640) {
-                    return (index % 2 === 0 ? "100vw" : "-100vw");
-                } else if (screenWidth < 1024) {
-                    return (index % 2 === 0 ? "80vw" : "-80vw");
-                } else {
-                    return (index % 2 === 0 ? "600px" : "-600px");
-                }
-            },
-            opacity: 0,
-          },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 1.5,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: row,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
-              // markers: true, // Re-enable for debugging!
-            },
-          }
-        );
+      // Using gsap.matchMedia for cleaner responsive animations
+      let mm = gsap.matchMedia();
 
-        // --- Animation for individual items (stagger effect) ---
-        gsap.fromTo(
-          items,
-          {
-            opacity: 0,
-            x: (i) => (i % 2 === 0 ? -10 : 10),
-          },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 1,
-            ease: "power3.out",
-            stagger: 0.03,
-            scrollTrigger: {
-              trigger: row,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
-              // markers: true, // Re-enable for debugging!
+      // --- Desktop Logic (>= 1024px) ---
+      mm.add("(min-width: 1024px)", () => {
+        gsap.utils.toArray(".tech-row").forEach((row, index) => {
+          const items = row.querySelectorAll(".tech-item");
+
+          gsap.fromTo(
+            row,
+            {
+              x: (index % 2 === 0 ? 600 : -600), // Original desktop animation
+              opacity: 0,
             },
-          }
-        );
+            {
+              x: 0,
+              opacity: 1,
+              duration: 1.5,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: row, // Trigger on the row itself
+                start: "top 85%",
+                end: "bottom 15%",
+                scrub: 1,
+                // markers: true, // Enable for desktop debugging if needed
+              },
+            }
+          );
+
+          gsap.fromTo(
+            items,
+            {
+              opacity: 0,
+              x: (i) => (i % 2 === 0 ? -100 : 100), // Original desktop item stagger
+            },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 1,
+              ease: "power3.out",
+              stagger: 0.1,
+              scrollTrigger: {
+                trigger: row,
+                start: "top 85%",
+                end: "bottom 15%",
+                scrub: 1,
+              },
+            }
+          );
+        });
       });
+
+      // --- Mobile/Tablet Logic (< 1024px) ---
+      mm.add("(max-width: 1023px)", () => {
+        gsap.utils.toArray(".tech-row").forEach((row, index) => {
+          const innerContent = row.querySelector(".tech-row-inner"); // Get the inner content
+          if (!innerContent) return; // Safeguard
+
+          // We'll duplicate the content to ensure a seamless loop
+          // This should ideally be done in the JSX, but for a quick fix, we can do it here.
+          // Better approach would be to render items twice in JSX.
+          // For now, let's assume the duplication is handled in JSX as shown below.
+
+          // Calculate the width of the content to scroll
+          const contentWidth = innerContent.scrollWidth; // Use scrollWidth to get the full width
+
+          // Determine direction
+          const direction = index % 2 === 0 ? -1 : 1; // Even rows move left, odd rows move right
+
+          gsap.to(innerContent, {
+            x: (direction * (contentWidth / 2)), // Move half the width for looping. This is adjusted based on how many duplicates you have.
+            ease: "none",
+            duration: contentWidth / 100, // Adjust duration for desired speed
+            repeat: -1, // Infinite loop
+            modifiers: {
+              x: gsap.utils.wrap(0, contentWidth) // Wrap the x position to create a seamless loop
+            }
+          });
+        });
+      });
+
     }, component);
 
-    return () => ctx.revert();
+    return () => ctx.revert(); // Cleanup animations
   }, []);
 
   return (
@@ -88,35 +113,43 @@ const TechList = ({ slice }) => {
         </Heading>
       </Bounded>
 
-      {/* !!! MOVE THE TECH-ROW LOOP OUTSIDE Bounded !!! */}
+      {/* The tech-row container. overflow-hidden is crucial here. */}
       {slice.primary.repeatable.map((item, index) => (
         <div
           key={index}
-          // The overflow-hidden on tech-row is crucial here
-          className="tech-row mb-8 flex flex-nowrap items-center justify-center gap-2 md:gap-4 text-slate-700 whitespace-nowrap overflow-hidden"
-          // Keep minWidth for the row itself
-          style={{ minWidth: "100vw" }}
+          className="tech-row mb-8 flex items-center text-slate-700 overflow-hidden" // Removed justify-center and gap, flex-nowrap if handled by inner div
         >
-          {Array.from({ length: window.innerWidth < 640 ? 3 : (window.innerWidth < 1024 ? 7 : 15) }, (_, i) => {
-            const numItems = window.innerWidth < 640 ? 3 : (window.innerWidth < 1024 ? 7 : 15);
-            const middleIndex = Math.floor(numItems / 2);
+          {/* Inner div for the actual looping content. This is what GSAP will animate. */}
+          {/* We duplicate the content here for a seamless loop */}
+          <div className="tech-row-inner flex flex-nowrap items-center gap-4 py-2">
+            {/* Render 3 repetitions of the tech name for seamless loop */}
+            {Array.from({ length: 3 }, (_, k) => ( // Duplicate content for looping
+              <React.Fragment key={k}>
+                {/* Adjust item count and styling for mobile here directly using Tailwind classes */}
+                {Array.from({ length: 5 }, (_, i) => { // Render fewer visible items for mobile loop
+                  const numVisibleItems = 5; // Number of items you want to see before repetition starts
+                  const middleIndex = Math.floor(numVisibleItems / 2); // Calculate middle for visible items
 
-            return (
-              <React.Fragment key={i}>
-                <span
-                  className="tech-item text-xl md:text-3xl lg:text-6xl font-extrabold uppercase tracking-tighter"
-                  style={{
-                    color: i === middleIndex ? item.tech_color : "inherit",
-                  }}
-                >
-                  {item.tech_name}
-                </span>
-                <span className="text-lg md:text-xl lg:text-3xl">
-                  <MdCircle />
-                </span>
+                  return (
+                    <React.Fragment key={`${k}-${i}`}>
+                      <span
+                        className="tech-item text-3xl md:text-4xl lg:text-6xl font-extrabold uppercase tracking-tighter" // Responsive font sizes
+                        style={{
+                          // Only apply color to the "middle" item within the currently visible set
+                          color: (i === middleIndex && k === 1) ? item.tech_color : "inherit", // Apply color to middle item of the central duplication
+                        }}
+                      >
+                        {item.tech_name}
+                      </span>
+                      <span className="text-xl md:text-2xl lg:text-3xl">
+                        <MdCircle />
+                      </span>
+                    </React.Fragment>
+                  );
+                })}
               </React.Fragment>
-            );
-          })}
+            ))}
+          </div>
         </div>
       ))}
     </section>
