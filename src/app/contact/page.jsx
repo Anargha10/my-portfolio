@@ -24,33 +24,33 @@ export default function ContactPage() {
           for quick answers about my work and experience.
         </p>
 
-        <div className="mx-auto grid w-full max-w-5xl gap-8 lg:grid-cols-2 lg:items-start">
-          <div className="space-y-8 rounded-2xl bg-slate-800/40 p-8 backdrop-blur">
+        <div className="mx-auto grid w-full min-w-0 max-w-5xl gap-8 lg:grid-cols-2 lg:items-start">
+          <div className="min-w-0 space-y-8 rounded-2xl bg-slate-800/40 p-4 backdrop-blur sm:p-6 md:p-8">
             <h2 className="text-center text-lg font-semibold text-slate-100">
               Direct Contact
             </h2>
 
             <div className="space-y-8">
-              <div className="flex items-center justify-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-700/50">
+              <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:gap-4 sm:text-left">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-700/50">
                   <FaEnvelope className="h-5 w-5 text-cyan-400" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-sm text-slate-400">Primary Contact</p>
                   <a
                     href={`mailto:${CONTACT_INFO.email}`}
-                    className="text-lg font-medium text-slate-200 transition hover:text-cyan-400"
+                    className="break-all text-base font-medium text-slate-200 transition hover:text-cyan-400 sm:break-normal sm:text-lg"
                   >
                     {CONTACT_INFO.email}
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-center justify-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-700/50">
+              <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:gap-4 sm:text-left">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-700/50">
                   <FaPhone className="h-5 w-5 text-cyan-400" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-sm text-slate-400">Alternative Contact</p>
                   <a
                     href={`tel:${CONTACT_INFO.phone.replace(/\s/g, "")}`}
@@ -67,7 +67,9 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <Chatbot />
+          <div className="min-w-0 w-full">
+            <Chatbot />
+          </div>
         </div>
       </div>
     </Bounded>

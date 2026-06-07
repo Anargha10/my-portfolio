@@ -15,14 +15,14 @@ export default async function Header() {
         const settings = await client.getSingle("settings");
 
         return (
-            <header className="top-0 z-50 mx-auto max-w-7xl md:sticky md:top-4">
+            <header className="top-0 z-50 mx-auto w-full min-w-0 max-w-7xl md:sticky md:top-4">
                 <NavBar settings={settings} />
             </header>
         );
     } catch (error) {
         console.error("Error fetching settings document:", error);
         return (
-            <header className="top-0 z-50 mx-auto max-w-7xl md:sticky md:top-4">
+            <header className="top-0 z-50 mx-auto w-full min-w-0 max-w-7xl md:sticky md:top-4">
                 <nav>
                     <ul>
                         <li>

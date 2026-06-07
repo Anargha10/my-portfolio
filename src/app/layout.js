@@ -22,9 +22,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="bg-slate-900">
       
-      <body className={clsx(`${urbanist.variable} antialiased`, 'relative min-h-screen overflow-x-hidden')}>
+      <body className={clsx(`${urbanist.variable} antialiased`, 'relative min-h-screen overflow-x-clip')}>
         <Header/>
-        {children}
+        <div className="w-full min-w-0 overflow-x-clip">{children}</div>
         <Footer/>
         <div className="absolute inset-0 -z-50 h-full w-full background-gradient"></div>
         <div className="absolute pointer-events-none inset-0 -z-40 h-full bg-[url('/noisetexture.jpg')] opacity-20 mix-blend-soft-light">

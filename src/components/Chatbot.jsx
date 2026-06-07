@@ -132,16 +132,16 @@ export default function Chatbot() {
   return (
     <section
       aria-label="Portfolio chat assistant"
-      className="flex h-[min(32rem,70vh)] flex-col overflow-hidden rounded-2xl border border-slate-700/50 bg-slate-800/40 shadow-xl backdrop-blur"
+      className="flex h-[min(32rem,70vh)] w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-700/50 bg-slate-800/40 shadow-xl backdrop-blur"
     >
       <header className="flex items-center justify-between gap-3 border-b border-slate-700/50 px-4 py-3">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-700/50">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-700/50">
             <FaRobot className="h-5 w-5 text-cyan-400" aria-hidden="true" />
           </div>
-          <div>
-            <h2 className="text-base font-semibold text-slate-100">Portfolio Assistant</h2>
-            <p className="text-xs text-slate-400">Powered by AI · Answers from site content</p>
+          <div className="min-w-0">
+            <h2 className="truncate text-base font-semibold text-slate-100">Portfolio Assistant</h2>
+            <p className="hidden text-xs text-slate-400 sm:block">Powered by AI · Answers from site content</p>
           </div>
         </div>
         <button
@@ -248,8 +248,8 @@ export default function Chatbot() {
             )}
           </button>
         </div>
-        <div className="mt-2 flex items-center justify-between text-xs text-slate-500">
-          <span>Enter to send · Shift+Enter for new line</span>
+        <div className="mt-2 flex flex-col gap-1 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <span className="hidden sm:inline">Enter to send · Shift+Enter for new line</span>
           <span className={clsx(isOverLimit && "text-red-400")}>
             {remainingChars} characters left
           </span>

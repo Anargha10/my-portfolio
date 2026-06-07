@@ -9,7 +9,7 @@ const Bounded = React.forwardRef(
         className={clsx("px-4 py-10 md:px-6 md:py-15 lg:py-16", className)} // Fixed usage of clsx
         {...restProps}
       >
-        <div className="mx-auto w-full max-w-7xl">{children}</div>
+        <div className="mx-auto w-full min-w-0 max-w-7xl">{children}</div>
       </Comp>
     );
   }

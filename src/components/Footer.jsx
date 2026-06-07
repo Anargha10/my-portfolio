@@ -12,7 +12,7 @@ export default async function Footer() {
   const settings = await client.getSingle("settings");
   return (
     <Bounded as="footer" className="text-slate-600">
-      <div className="container mx-auto mt-20 flex flex-col items-center justify-between gap-6 py-8 sm:flex-row ">
+      <div className="container mx-auto mt-20 flex w-full min-w-0 flex-col items-center justify-between gap-6 py-8 sm:flex-row">
         <div className="name flex flex-col items-center justify-center gap-x-4 gap-y-2 sm:flex-row sm:justify-self-start">
           <Link
             href="/"
@@ -31,7 +31,7 @@ export default async function Footer() {
           </p>
         </div>
         <nav className="navigation" aria-label="Footer Navigation">
-          <ul className="flex items-center gap-1">
+          <ul className="flex max-w-full flex-wrap items-center justify-center gap-1">
             {settings.data.nav_item.map(({ link, label }, index) => (
               <React.Fragment key={label}>
                 <li>

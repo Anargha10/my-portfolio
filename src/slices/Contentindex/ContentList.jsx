@@ -145,12 +145,12 @@ const ContentList = ({
         >
           <Link
             href={urlPrefix + "/" + post.uid}
-            className="flex flex-col justify-between border-t border-t-slate-100 py-10 text-slate-200 md:flex-row"
+            className="flex flex-col justify-between gap-4 border-t border-t-slate-100 py-8 text-slate-200 sm:py-10 md:flex-row md:gap-0"
             aria-label={post.data.title}
           >
-            <div className="flex flex-col">
-              <span className="text-3xl font-bold">{post.data.title}</span>
-              <div className="flex gap-3 text-yellow-400">
+            <div className="min-w-0 flex flex-col">
+              <span className="break-words text-xl font-bold sm:text-2xl md:text-3xl">{post.data.title}</span>
+              <div className="flex flex-wrap gap-2 text-yellow-400 sm:gap-3">
                 {post.tags.map((tag, tagIndex) => (
                   <span key={tagIndex} className="text-lg font-bold">
                     {tag}

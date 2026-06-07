@@ -30,7 +30,7 @@ const items = contentType === 'Blog' ? blogPosts : projects;
       </Heading>
 
         {isFilled.richText(slice.primary.description) && (
-          <div className="prose prose-xl prose-invert mb-10">
+          <div className="prose prose-xl prose-invert mb-10 max-w-full break-words">
               <PrismicRichText field={slice.primary.description}/>
           </div>
           

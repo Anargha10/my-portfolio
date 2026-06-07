@@ -7,7 +7,11 @@ import { PrismicNextImage } from "@prismicio/next";
  */
 const ImageBlock = ({ slice }) => {
   return (
-   <PrismicNextImage field={slice.primary.image} imgixParams={{w: 800}} />
+   <PrismicNextImage
+     field={slice.primary.image}
+     className="h-auto w-full max-w-full"
+     imgixParams={{ w: 800 }}
+   />
   );
 };
 

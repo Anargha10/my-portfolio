@@ -22,13 +22,13 @@ const Biography = ({ slice }) => {
   <Heading
     as="h1"
     size="lg"
-    className="col-start-1 whitespace-nowrap mb-2"
+    className="col-start-1 mb-2 md:whitespace-nowrap"
   >
     {slice.primary.heading}
   </Heading>
 
 
-      <div className="prose prose-xl prose-slate prose-invert col-start-1 text-slate-800 mb-4">
+      <div className="prose prose-xl prose-slate prose-invert col-start-1 mb-4 max-w-full break-words text-slate-800">
           <PrismicRichText field={slice.primary.description}/>
       </div>
         <Button linkField={slice.primary.button_link} 

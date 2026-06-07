@@ -27,11 +27,11 @@ export default  function ContentBody({ page }) {
 
   return (
     <Bounded as='article'>
-      <div className="rounded-2xl border-2 border-slate-800 bg-slate-900 px-4 py-10 md:px-8 md:py-20">
-        <Heading as='h1'>{page.data.title}</Heading>
+      <div className="rounded-2xl border-2 border-slate-800 bg-slate-900 px-3 py-8 sm:px-4 sm:py-10 md:px-8 md:py-20">
+        <Heading as='h1' className="break-words">{page.data.title}</Heading>
 
          {/* Tags */}
-         <div className="flex gap-4 text-yellow-400 text-xl font-bold mt-5">
+         <div className="mt-5 flex flex-wrap gap-2 text-lg font-bold text-yellow-400 sm:gap-4 sm:text-xl">
           {page.tags.map((tag) => (
             <span key={tag} className="">
               {tag}
@@ -46,7 +46,7 @@ export default  function ContentBody({ page }) {
           </p>
         
 
-          <div className="prose prose-lg prose-invert mt-12 max-w-none md:mt-20">
+          <div className="prose prose-lg prose-invert mt-12 max-w-none break-words [overflow-wrap:anywhere] md:mt-20">
 
         <SliceZone slices={page.data.slices} components={components} />
         </div>
